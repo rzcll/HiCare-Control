@@ -244,15 +244,35 @@
                         <input type="text" id="inpPassword" class="w-full border border-slate-200/80 rounded-2xl pl-11 pr-4 py-3.5 outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all shadow-sm bg-white text-sm font-semibold text-slate-800 placeholder-slate-300">
                     </div>
                 </div>
-                <div class="space-y-1.5">
-                    <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest pl-1">License Code</label>
-                    <div class="relative group">
-                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                            <i data-lucide="shield-check" class="w-4 h-4 text-slate-400 group-focus-within:text-indigo-500 transition-colors"></i>
+                
+                <!-- Kolom Pilihan Paket digabung bersama License Code -->
+                <div class="grid grid-cols-2 gap-5">
+                    <div class="space-y-1.5">
+                        <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest pl-1">License Code</label>
+                        <div class="relative group">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <i data-lucide="shield-check" class="w-4 h-4 text-slate-400 group-focus-within:text-indigo-500 transition-colors"></i>
+                            </div>
+                            <input type="text" id="inpLicense" class="w-full border border-slate-200/80 rounded-2xl pl-11 pr-4 py-3.5 outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all shadow-sm bg-white text-sm font-semibold text-slate-800 placeholder-slate-300">
                         </div>
-                        <input type="text" id="inpLicense" class="w-full border border-slate-200/80 rounded-2xl pl-11 pr-4 py-3.5 outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all shadow-sm bg-white text-sm font-semibold text-slate-800 placeholder-slate-300">
+                    </div>
+                    <div class="space-y-1.5">
+                        <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest pl-1">Paket (Bulan)</label>
+                        <div class="relative group">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <i data-lucide="package" class="w-4 h-4 text-slate-400 group-focus-within:text-indigo-500 transition-colors"></i>
+                            </div>
+                            <select id="inpPackage" onchange="calculateExpiry()" class="w-full border border-slate-200/80 rounded-2xl pl-11 pr-4 py-3.5 outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all shadow-sm bg-white text-sm font-semibold text-slate-800 cursor-pointer appearance-none">
+                                <option value="">- Custom/Tidak Ada -</option>
+                                <option value="1">1 Bulan (30 Hari)</option>
+                                <option value="3">3 Bulan (90 Hari)</option>
+                                <option value="6">6 Bulan (180 Hari)</option>
+                                <option value="12">12 Bulan (360 Hari)</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
+
                 <div class="grid grid-cols-2 gap-5">
                     <div class="space-y-1.5">
                         <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest pl-1">Tanggal Pembelian</label>
@@ -260,7 +280,7 @@
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                 <i data-lucide="calendar-days" class="w-4 h-4 text-slate-400 group-focus-within:text-indigo-500 transition-colors"></i>
                             </div>
-                            <input type="date" id="inpPurchaseDate" class="w-full border border-slate-200/80 rounded-2xl pl-11 pr-4 py-3.5 outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all shadow-sm bg-white text-sm font-semibold text-slate-800 cursor-pointer">
+                            <input type="date" id="inpPurchaseDate" onchange="calculateExpiry()" class="w-full border border-slate-200/80 rounded-2xl pl-11 pr-4 py-3.5 outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all shadow-sm bg-white text-sm font-semibold text-slate-800 cursor-pointer">
                         </div>
                     </div>
                     <div class="space-y-1.5">
@@ -303,7 +323,6 @@
                 
                 <div class="space-y-1.5">
                     <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest pl-1">Tanggal Terbit (Data Kolom F)</label>
-                    <!-- Input dibuat readonly dan diberi warna abu-abu agar terlihat paten -->
                     <input type="date" id="setInvDate" readonly class="w-full border border-slate-200/80 rounded-2xl px-4 py-3.5 outline-none shadow-sm bg-slate-100 text-sm font-bold text-slate-500 cursor-not-allowed">
                 </div>
 
@@ -844,6 +863,26 @@
             lucide.createIcons();
         }
 
+        // --- FUNGSI UNTUK KALKULASI OTOMATIS EXPIRY DATE ---
+        function calculateExpiry() {
+            const purchaseDateStr = document.getElementById('inpPurchaseDate').value;
+            const packageVal = document.getElementById('inpPackage').value;
+
+            if (purchaseDateStr && packageVal !== "") {
+                const packageMonths = parseInt(packageVal);
+                const date = new Date(purchaseDateStr);
+                
+                // Menambahkan hari: (Misal: 1 bulan = 30 hari)
+                date.setDate(date.getDate() + (packageMonths * 30));
+
+                const y = date.getFullYear();
+                const m = String(date.getMonth() + 1).padStart(2, '0');
+                const d = String(date.getDate()).padStart(2, '0');
+
+                document.getElementById('inpExpiry').value = `${y}-${m}-${d}`;
+            }
+        }
+
         // --- FUNGSI UNTUK MODAL TAMBAH/EDIT ---
         function openModal(mode, userData = null) {
             currentMode = mode;
@@ -861,14 +900,18 @@
                 document.getElementById('inpLicense').value = "";
                 document.getElementById('inpExpiry').value = "";
                 
-                // Set Otomatis Tanggal Hari Ini untuk Pembelian Baru
+                // Set Otomatis Tanggal Hari Ini & Paket Default (1 Bulan) untuk Pembelian Baru
                 document.getElementById('inpPurchaseDate').value = new Date().toISOString().split('T')[0];
+                document.getElementById('inpPackage').value = "1";
+                calculateExpiry(); // Langsung isi kotak expiry date
+                
             } else {
                 title.textContent = "Edit Data User";
                 document.getElementById('oldUsername').value = userData.username;
                 document.getElementById('inpUsername').value = userData.username;
                 document.getElementById('inpPassword').value = userData.password;
                 document.getElementById('inpLicense').value = userData.licenseCode;
+                document.getElementById('inpPackage').value = userData.package || ""; // Tarik data paket (jika ada)
                 
                 // Format Purchase Date (Kolom F) jika ada
                 let cleanPurchase = userData.purchaseDate;
@@ -912,7 +955,8 @@
                 password: document.getElementById('inpPassword').value.trim(),
                 licenseCode: document.getElementById('inpLicense').value.trim(),
                 expiryDate: document.getElementById('inpExpiry').value.trim(),
-                purchaseDate: document.getElementById('inpPurchaseDate').value.trim() // Tambahan Payload
+                purchaseDate: document.getElementById('inpPurchaseDate').value.trim(), 
+                package: document.getElementById('inpPackage').value.trim() // Tambahan Payload Paket
             };
 
             if (!newData.username || !newData.password) {
@@ -944,7 +988,6 @@
         // --- FUNGSI UNTUK INVOICE BARU (DENGAN PENYIMPANAN LOCAL) ---
         let currentInvoiceUser = null;
 
-        // 1. Mempersiapkan visual invoice agar sama antara mode View dan Generate
         function prepareInvoiceView(userData, invoiceData) {
             let emitDate = new Date();
             if(invoiceData.date) emitDate = new Date(invoiceData.date);
@@ -952,7 +995,6 @@
             
             const formattedPrice = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(invoiceData.price);
 
-            // Bikin nomor invoice konsisten berdasar username & tanggal agar tak berubah tiap buka
             const yyyymm = emitDate.getFullYear() + String(emitDate.getMonth() + 1).padStart(2, '0');
             let numHash = 0;
             for(let i=0; i<userData.username.length; i++) numHash += userData.username.charCodeAt(i);
@@ -975,11 +1017,9 @@
             document.getElementById('invTotalBig').textContent = formattedPrice;
         }
 
-        // 2. Buka Pengaturan (Pre-Invoice)
         function openInvoiceSettings(userData) {
             currentInvoiceUser = userData;
             
-            // Format "Tanggal Pembelian (Kolom F)" secara paten
             let purchaseDateStr = new Date().toISOString().split('T')[0];
             if (userData.purchaseDate && userData.purchaseDate !== '-') {
                 const pDate = new Date(userData.purchaseDate);
@@ -991,10 +1031,8 @@
                 }
             }
             
-            // Mengisi Input Tanggal dengan data Kolom F (Paten)
             document.getElementById('setInvDate').value = purchaseDateStr;
             
-            // Cek apakah user ini punya histori setting di local browser
             const savedData = localStorage.getItem('invoice_' + userData.username);
             if (savedData) {
                 const parsed = JSON.parse(savedData);
@@ -1002,7 +1040,8 @@
                 document.getElementById('setInvType').value = parsed.type;
                 document.getElementById('setInvPrice').value = parsed.price;
             } else {
-                document.getElementById('setInvPackage').value = "1";
+                // Jika belum ada invoice tersimpan, ambil paket dari data tabel jika ada
+                document.getElementById('setInvPackage').value = userData.package || "1";
                 document.getElementById('setInvType').value = "Basic";
                 document.getElementById('setInvPrice').value = "240000";
             }
@@ -1018,7 +1057,6 @@
             setTimeout(() => { modal.classList.add('hidden'); }, 300);
         }
 
-        // 3. Simpan setting dan tampilkan Invoice
         function generateInvoice() {
             if(!currentInvoiceUser) return;
             const userData = currentInvoiceUser;
@@ -1030,13 +1068,11 @@
                 price: parseFloat(document.getElementById('setInvPrice').value) || 0
             };
 
-            // SIMPAN DATA SECARA PATEN DI BROWSER
             localStorage.setItem('invoice_' + userData.username, JSON.stringify(invoiceData));
 
             prepareInvoiceView(userData, invoiceData);
             closeInvoiceSettings();
             
-            // Segarkan ulang tabel di background agar tombol berganti warna
             applyFilterAndSort();
 
             const modal = document.getElementById('invoiceModal');
@@ -1044,7 +1080,6 @@
             setTimeout(() => { modal.setAttribute('data-state', 'open'); }, 400); 
         }
 
-        // 4. Buka Langsung Invoice Terbit
         function viewInvoice(userData) {
             currentInvoiceUser = userData;
             const savedData = localStorage.getItem('invoice_' + userData.username);
@@ -1065,7 +1100,6 @@
             setTimeout(() => { modal.classList.add('hidden'); }, 300);
         }
 
-        // 5. Unduh PDF
         function downloadInvoicePDF() {
             const element = document.getElementById('invoiceContent');
             const opt = {
@@ -1118,9 +1152,7 @@
             closeDeleteModal(); 
 
             if (result && result.success) {
-                // Hapus juga histori invoice di browser saat user dihapus
                 localStorage.removeItem('invoice_' + userToDelete);
-                
                 showToast(result.message);
                 loadUsers(); 
             } else if (result) {

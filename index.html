@@ -89,14 +89,13 @@
         }
     </style>
 </head>
-<!-- Mengubah body menjadi h-screen, overflow-hidden, dan flex-col agar menjadi Full Layout App -->
 <body class="text-slate-800 font-sans h-screen overflow-hidden flex flex-col selection:bg-indigo-500/30 selection:text-indigo-900 relative">
 
     <!-- Efek Pendaran Latar Belakang -->
     <div class="ambient-glow-1"></div>
     <div class="ambient-glow-2"></div>
 
-    <!-- Header (Menambahkan shrink-0) -->
+    <!-- Header -->
     <header class="bg-[#0b1120]/95 text-white shadow-2xl z-40 border-b border-slate-800 backdrop-blur-xl shrink-0">
         <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div class="flex flex-col md:flex-row justify-between items-center gap-5">
@@ -160,17 +159,16 @@
         </div>
     </header>
 
-    <!-- Main Content (Menggunakan flex-1 dan min-h-0 agar mengisi sisa layar) -->
+    <!-- Main Content -->
     <main class="w-full max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 py-6 relative z-10 flex-1 flex flex-col min-h-0">
         
-        <!-- Table Container (Menjadi flex-1 agar memenuhi ruang secara otomatis) -->
+        <!-- Table Container -->
         <div class="bg-white/70 backdrop-blur-xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] rounded-[2rem] border border-white/80 ring-1 ring-slate-900/5 flex-1 flex flex-col min-h-0">
-            <!-- Area Scroll Internal Tanpa Scrollbar Visual -->
-            <div class="w-full overflow-auto flex-1 no-scrollbar rounded-[2rem]">
-                <!-- border-separate diperlukan agar border-b di thead ikut sticky -->
+            <!-- Area Scroll Internal -->
+            <div class="w-full overflow-auto flex-1 no-scrollbar rounded-[2rem] pb-8">
                 <table class="w-full text-left border-separate border-spacing-0 whitespace-nowrap">
                     
-                    <!-- Header Sticky yang Paten di posisi atas (z-30) -->
+                    <!-- Header Sticky -->
                     <thead class="sticky top-0 z-30 bg-slate-50/95 backdrop-blur-md shadow-[0_4px_10px_-2px_rgba(0,0,0,0.05)]">
                         <tr>
                             <th class="px-8 py-5 text-[11px] font-extrabold text-orange-500 uppercase tracking-widest border-b border-slate-200">Username</th>
@@ -245,7 +243,6 @@
                     </div>
                 </div>
                 
-                <!-- Kolom Pilihan Paket digabung bersama License Code -->
                 <div class="grid grid-cols-2 gap-5">
                     <div class="space-y-1.5">
                         <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest pl-1">License Code</label>
@@ -328,8 +325,8 @@
 
                 <div class="grid grid-cols-2 gap-5">
                     <div class="space-y-1.5">
-                        <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest pl-1">Pilihan Paket</label>
-                        <select id="setInvPackage" class="w-full border border-slate-200/80 rounded-2xl px-4 py-3.5 outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all shadow-sm bg-white text-sm font-semibold text-slate-800 cursor-pointer appearance-none">
+                        <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest pl-1">Pilihan Paket (Data Kolom G)</label>
+                        <select id="setInvPackage" disabled class="w-full border border-slate-200/80 rounded-2xl px-4 py-3.5 outline-none shadow-sm bg-slate-100 text-sm font-bold text-slate-500 cursor-not-allowed appearance-none">
                             <option value="1">1 Bulan</option>
                             <option value="3">3 Bulan</option>
                             <option value="6">6 Bulan</option>
@@ -386,7 +383,7 @@
             </div>
             
             <!-- Area Print PDF -->
-            <div id="invoiceContent" class="bg-white overflow-y-auto px-12 py-12 relative text-slate-800">
+            <div id="invoiceContent" class="bg-white overflow-y-auto px-10 py-10 relative text-slate-800">
                 
                 <div class="invoice-stamp">
                     <div class="text-center">
@@ -396,10 +393,11 @@
                     </div>
                 </div>
 
-                <!-- Header Invoice -->
-                <div class="flex justify-between items-start mb-12 border-b border-slate-100 pb-8">
+                <!-- Header Invoice (Pengurangan margin agar muat 1 layar) -->
+                <div class="flex justify-between items-start mb-8 border-b border-slate-100 pb-6">
                     <div class="flex items-center space-x-5">
-                        <img src="https://github.com/rzcll/WebsiteHiCare/blob/main/LOGO%20HiCare.png?raw=true" alt="Logo" class="w-16 h-16 object-contain">
+                        <!-- Menggunakan raw link dan crossorigin untuk menjamin logo tercetak -->
+                        <img src="https://raw.githubusercontent.com/rzcll/WebsiteHiCare/main/LOGO%20HiCare.png" alt="Logo" class="w-16 h-16 object-contain" crossorigin="anonymous">
                         <div>
                             <h1 class="text-3xl font-black text-slate-900 leading-none tracking-tight mb-1">HiCare Smart Reminder</h1>
                             <p class="text-xs text-slate-400 font-bold uppercase tracking-[0.2em]">www.hicare.site</p>
@@ -418,14 +416,15 @@
                 </div>
 
                 <!-- Grid Info -->
-                <div class="grid grid-cols-4 border border-slate-100 rounded-2xl mb-10 bg-slate-50/50 overflow-hidden divide-x divide-slate-100">
+                <div class="grid grid-cols-4 border border-slate-100 rounded-2xl mb-6 bg-slate-50/50 overflow-hidden divide-x divide-slate-100">
                     <div class="p-5 text-center">
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Tanggal Terbit</p>
                         <p class="font-black text-slate-800 text-sm" id="invDateEmit">-</p>
                     </div>
-                    <div class="p-5 text-center">
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Jatuh Tempo</p>
-                        <p class="font-black text-slate-800 text-sm">Seketika / Lunas</p>
+                    <!-- Tampilan Expiry Date -->
+                    <div class="p-5 text-center bg-rose-50/30">
+                        <p class="text-[10px] font-bold text-rose-400 uppercase tracking-widest mb-1.5">Expiry Date</p>
+                        <p class="font-black text-slate-800 text-sm" id="invExpiryDateDisplay">-</p>
                     </div>
                     <div class="p-5 text-center">
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Metode Bayar</p>
@@ -438,48 +437,48 @@
                 </div>
 
                 <!-- Target Tagihan & Rekening -->
-                <div class="grid grid-cols-2 gap-8 mb-10">
-                    <div class="border border-slate-100 rounded-2xl p-6 bg-white shadow-sm">
-                        <div class="flex items-center mb-4">
+                <div class="grid grid-cols-2 gap-8 mb-6">
+                    <div class="border border-slate-100 rounded-2xl p-5 bg-white shadow-sm">
+                        <div class="flex items-center mb-3">
                             <div class="w-2 h-2 rounded-full bg-indigo-500 mr-2.5"></div>
                             <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Ditagihkan Kepada:</p>
                         </div>
-                        <h3 class="text-xl font-black text-slate-900 mb-2" id="invToName">-</h3>
+                        <h3 class="text-xl font-black text-slate-900 mb-1.5" id="invToName">-</h3>
                         <p class="text-sm text-slate-500 font-medium">Password Akses: <span id="invToPass" class="font-mono text-slate-800 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200"></span></p>
                     </div>
-                    <div class="border border-slate-100 rounded-2xl p-6 bg-white shadow-sm">
-                        <div class="flex items-center mb-4">
+                    <div class="border border-slate-100 rounded-2xl p-5 bg-white shadow-sm">
+                        <div class="flex items-center mb-3">
                             <div class="w-2 h-2 rounded-full bg-emerald-500 mr-2.5"></div>
                             <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Rekening Penerima Resmi:</p>
                         </div>
                         <h3 class="text-lg font-black text-slate-900 mb-1">HiCare Billing Center</h3>
-                        <p class="text-sm text-slate-500 mb-2">Layanan Aktivasi Otomatis via <span class="font-bold text-slate-700">Sistem API</span></p>
+                        <p class="text-sm text-slate-500 mb-1.5">Layanan Aktivasi Otomatis via <span class="font-bold text-slate-700">Sistem API</span></p>
                     </div>
                 </div>
 
                 <!-- Tabel Item -->
-                <div class="mb-10 rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
+                <div class="mb-6 rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
                     <table class="w-full text-left">
                         <thead class="bg-indigo-600 text-white">
                             <tr>
-                                <th class="px-6 py-4 text-[11px] font-black uppercase tracking-widest w-[50%]">Deskripsi Produk & Layanan</th>
-                                <th class="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-center">Lisensi / Status</th>
-                                <th class="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-right">Tarif</th>
-                                <th class="px-6 py-4 text-[11px] font-black uppercase tracking-widest text-right">Subtotal</th>
+                                <th class="px-6 py-3.5 text-[11px] font-black uppercase tracking-widest w-[50%]">Deskripsi Produk & Layanan</th>
+                                <th class="px-6 py-3.5 text-[11px] font-black uppercase tracking-widest text-center">Lisensi / Status</th>
+                                <th class="px-6 py-3.5 text-[11px] font-black uppercase tracking-widest text-right">Tarif</th>
+                                <th class="px-6 py-3.5 text-[11px] font-black uppercase tracking-widest text-right">Subtotal</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100 bg-white">
                             <tr>
-                                <td class="px-6 py-5">
+                                <td class="px-6 py-4">
                                     <p class="font-bold text-slate-900 text-[15px]" id="invDescTitle">HiCare Smart Reminder - Paket</p>
                                     <p class="text-xs text-slate-400 mt-1.5 font-medium leading-relaxed">Aktivasi Lisensi Penggunaan Platform<br>Cloud Infrastructure & Management</p>
                                 </td>
-                                <td class="px-6 py-5 text-center align-top pt-6">
+                                <td class="px-6 py-4 text-center align-top pt-5">
                                     <span class="bg-slate-100 border border-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-lg tracking-wider" id="invLicCode">-</span>
                                     <p class="text-[10px] font-bold text-slate-400 uppercase mt-2" id="invDuration">-</p>
                                 </td>
-                                <td class="px-6 py-5 text-right text-sm text-slate-500 font-bold align-top pt-6" id="invTarif">Rp 0</td>
-                                <td class="px-6 py-5 text-right text-[15px] font-black text-slate-900 align-top pt-6" id="invSubtotal">Rp 0</td>
+                                <td class="px-6 py-4 text-right text-sm text-slate-500 font-bold align-top pt-5" id="invTarif">Rp 0</td>
+                                <td class="px-6 py-4 text-right text-[15px] font-black text-slate-900 align-top pt-5" id="invSubtotal">Rp 0</td>
                             </tr>
                         </tbody>
                     </table>
@@ -488,25 +487,21 @@
                 <!-- Footer Invoice & Tanda Tangan -->
                 <div class="flex justify-between items-end pt-2 pb-2">
                     <div class="w-1/2 pr-12">
-                        <h4 class="font-bold text-slate-800 text-sm mb-2">Syarat & Ketentuan Lisensi:</h4>
-                        <p class="text-xs text-slate-400 leading-relaxed font-medium">Terima kasih atas kerja sama Anda dalam membangun ekosistem digital bersama HiCare. Layanan Anda dikelola oleh sistem dan akan diperbarui sesuai ketentuan kontrak.</p>
+                        <h4 class="font-bold text-slate-800 text-sm mb-1.5">Syarat & Ketentuan Lisensi:</h4>
+                        <p class="text-[11px] text-slate-400 leading-relaxed font-medium">Terima kasih atas kerja sama Anda dalam membangun ekosistem digital bersama HiCare. Layanan Anda dikelola oleh sistem dan akan diperbarui sesuai ketentuan kontrak.</p>
                         
                         <!-- TANDA TANGAN ELEKTRONIK -->
-                        <div class="mt-8 pt-4 w-48 text-center relative">
-                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Authorized Signature</p>
+                        <div class="mt-4 w-48 text-center relative">
+                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Digital Signature</p>
                             
-                            <div class="relative flex justify-center items-center my-3 h-12">
-                                <!-- Stempel Basah Logo -->
-                                <img src="https://github.com/rzcll/WebsiteHiCare/blob/main/LOGO%20HiCare.png?raw=true" alt="Stamp" class="absolute w-16 h-16 opacity-30 -rotate-12 z-0" style="mix-blend-mode: multiply;">
-                                <!-- Tanda Tangan -->
-                                <div class="font-signature text-4xl text-slate-800 transform -rotate-3 select-none relative z-10">
-                                    Mohammad Ali A.
-                                </div>
+                            <!-- Gambar QR Statis dengan crossorigin -->
+                            <div class="relative flex justify-center items-center my-2 h-20 w-20 mx-auto">
+                                <img src="https://raw.githubusercontent.com/rzcll/HiCare-Control/main/QR%20Code.png" alt="QR Code Signature" class="w-full h-full object-contain bg-white p-1 border border-slate-200 rounded-lg shadow-sm" crossorigin="anonymous">
                             </div>
                             
                             <div class="border-t-2 border-slate-300 w-full pt-1.5">
-                                <p class="text-xs font-bold text-slate-700">Mohammad Ali Agustin</p>
-                                <p class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">Head Of HiCare apps.</p>
+                                <p class="text-[11px] font-bold text-slate-700">Mohammad Ali Agustin</p>
+                                <p class="text-[8px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">Head Of HiCare apps.</p>
                             </div>
                         </div>
                     </div>
@@ -517,7 +512,7 @@
                             <span class="text-sm font-black text-slate-900" id="invTotalSmall">Rp 0</span>
                         </div>
                         <div class="flex justify-between items-center bg-indigo-50 p-5 rounded-2xl border border-indigo-100 shadow-sm">
-                            <span class="text-xs font-black text-indigo-600 uppercase tracking-widest">Total Tagihan</span>
+                            <span class="text-[11px] font-black text-indigo-600 uppercase tracking-widest">Total Tagihan</span>
                             <span class="text-2xl font-black text-indigo-700" id="invTotalBig">Rp 0</span>
                         </div>
                     </div>
@@ -547,7 +542,7 @@
     </div>
 
     <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-8 right-8 bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-[0_15px_40px_-5px_rgba(0,0,0,0.3)] transform translate-y-24 opacity-0 transition-all duration-400 z-50 flex items-center font-semibold text-sm border border-slate-700/80 backdrop-blur-md">
+    <div id="toast" class="fixed bottom-8 right-8 bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-[0_15px_40px_-5px_rgba(0,0,0,0.3)] transform translate-y-24 opacity-0 transition-all duration-400 z-50 flex items-center font-semibold text-sm border border-slate-700/80 backdrop-blur-md pointer-events-none">
         <div class="p-1.5 rounded-full bg-indigo-500/20 mr-3">
             <i data-lucide="info" class="w-5 h-5 text-indigo-400" id="toastIcon"></i>
         </div>
@@ -557,7 +552,6 @@
     <script>
         lucide.createIcons();
 
-        // --- KONFIGURASI URL API ---
         const API_URL = "https://script.google.com/macros/s/AKfycbyRMBz6isIqB_q_ftcxGFqISCuY7Vxl9oU4zIePzImLH6X7sfGW57XEmj8wug6auGYB/exec";
 
         let currentMode = 'add'; 
@@ -575,12 +569,12 @@
             document.getElementById('toastMsg').textContent = message;
             
             if (isError) {
-                toast.className = 'fixed bottom-8 right-8 bg-rose-600 text-white px-6 py-4 rounded-2xl shadow-[0_15px_40px_-5px_rgba(225,29,72,0.4)] transition-all duration-400 z-50 flex items-center font-semibold text-sm border border-rose-500/80 backdrop-blur-md';
+                toast.className = 'fixed bottom-8 right-8 bg-rose-600 text-white px-6 py-4 rounded-2xl shadow-[0_15px_40px_-5px_rgba(225,29,72,0.4)] transition-all duration-400 z-50 flex items-center font-semibold text-sm border border-rose-500/80 backdrop-blur-md pointer-events-none';
                 icon.setAttribute('data-lucide', 'alert-circle');
                 icon.parentElement.className = 'p-1.5 rounded-full bg-white/20 mr-3';
                 icon.className = 'w-5 h-5 text-white';
             } else {
-                toast.className = 'fixed bottom-8 right-8 bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-[0_15px_40px_-5px_rgba(0,0,0,0.3)] transition-all duration-400 z-50 flex items-center font-semibold text-sm border border-slate-700/80 backdrop-blur-md';
+                toast.className = 'fixed bottom-8 right-8 bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-[0_15px_40px_-5px_rgba(0,0,0,0.3)] transition-all duration-400 z-50 flex items-center font-semibold text-sm border border-slate-700/80 backdrop-blur-md pointer-events-none';
                 icon.setAttribute('data-lucide', 'check-circle-2');
                 icon.parentElement.className = 'p-1.5 rounded-full bg-emerald-500/20 mr-3';
                 icon.className = 'w-5 h-5 text-emerald-400';
@@ -703,7 +697,7 @@
 
         function applyFilterAndSort() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            let filteredData = allUsersData.filter(user => user.username.toLowerCase().includes(query));
+            let filteredData = allUsersData.filter(user => String(user.username).toLowerCase().includes(query));
 
             if (currentSort !== 'none') {
                 filteredData.sort((a, b) => {
@@ -788,27 +782,28 @@
                         
                 const indicatorDot = isExpired ? "bg-rose-500" : (displayExpiry.toLowerCase() === 'aktif' ? "bg-emerald-500" : "bg-indigo-500");
                 const sisaWaktuClass = isExpired ? "text-rose-600 font-extrabold" : "text-slate-600 font-bold";
-                const userDataSafe = JSON.stringify(user).replace(/'/g, "\\'");
+                
+                // PENTING: Pengikatan Data Aman (Bebas Error Karakter) menggunakan `encodeURIComponent`
+                const safeEncUser = encodeURIComponent(String(user.username));
 
-                // Pengecekan apakah user ini sudah punya invoice yang tersimpan
                 const savedInvoice = localStorage.getItem('invoice_' + user.username);
                 let invoiceButtons = '';
 
                 if (savedInvoice) {
                     invoiceButtons = `
                         <div class="relative inline-block mr-0.5">
-                            <button onclick='viewInvoice(${userDataSafe})' class="text-emerald-600 bg-emerald-50 hover:bg-emerald-500 hover:text-white p-2.5 rounded-xl transition-all duration-200 inline-block ring-1 ring-emerald-500/20 shadow-sm hover:shadow-md" title="Lihat Invoice Terbit">
+                            <button data-user="${safeEncUser}" onclick="viewInvoice(this.dataset.user)" class="text-emerald-600 bg-emerald-50 hover:bg-emerald-500 hover:text-white p-2.5 rounded-xl transition-all duration-200 inline-block ring-1 ring-emerald-500/20 shadow-sm hover:shadow-md" title="Lihat Invoice Terbit">
                                 <i data-lucide="receipt" class="w-4 h-4"></i>
                             </button>
                             <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-emerald-500 rounded-full ring-2 ring-white z-10 animate-pulse"></span>
                         </div>
-                        <button onclick='openInvoiceSettings(${userDataSafe})' class="text-slate-400 hover:text-amber-500 bg-white hover:bg-amber-50 p-2.5 rounded-xl transition-all duration-200 inline-block ring-1 ring-slate-200 hover:ring-amber-200 shadow-sm hover:shadow-md" title="Edit Pengaturan Invoice">
+                        <button data-user="${safeEncUser}" onclick="openInvoiceSettings(this.dataset.user)" class="text-slate-400 hover:text-amber-500 bg-white hover:bg-amber-50 p-2.5 rounded-xl transition-all duration-200 inline-block ring-1 ring-slate-200 hover:ring-amber-200 shadow-sm hover:shadow-md" title="Edit Pengaturan Invoice">
                             <i data-lucide="settings-2" class="w-4 h-4"></i>
                         </button>
                     `;
                 } else {
                     invoiceButtons = `
-                        <button onclick='openInvoiceSettings(${userDataSafe})' class="text-slate-400 hover:text-indigo-500 bg-white hover:bg-indigo-50 p-2.5 rounded-xl transition-all duration-200 inline-block ring-1 ring-slate-200 hover:ring-indigo-200 shadow-sm hover:shadow-md" title="Buat Invoice Baru">
+                        <button data-user="${safeEncUser}" onclick="openInvoiceSettings(this.dataset.user)" class="text-slate-400 hover:text-indigo-500 bg-white hover:bg-indigo-50 p-2.5 rounded-xl transition-all duration-200 inline-block ring-1 ring-slate-200 hover:ring-indigo-200 shadow-sm hover:shadow-md" title="Buat Invoice Baru">
                             <i data-lucide="file-plus-2" class="w-4 h-4"></i>
                         </button>
                     `;
@@ -849,11 +844,11 @@
                         <!-- Tombol Invoice Dinamis -->
                         ${invoiceButtons}
 
-                        <button onclick='openModal("edit", ${userDataSafe})' class="text-slate-400 hover:text-indigo-600 bg-white hover:bg-indigo-50 p-2.5 rounded-xl transition-all duration-200 inline-block ring-1 ring-slate-200 hover:ring-indigo-200 shadow-sm hover:shadow-md" title="Edit Data User">
+                        <button data-user="${safeEncUser}" onclick="openModal('edit', this.dataset.user)" class="text-slate-400 hover:text-indigo-600 bg-white hover:bg-indigo-50 p-2.5 rounded-xl transition-all duration-200 inline-block ring-1 ring-slate-200 hover:ring-indigo-200 shadow-sm hover:shadow-md" title="Edit Data User">
                             <i data-lucide="pencil" class="w-4 h-4"></i>
                         </button>
 
-                        <button onclick='deleteUser("${user.username}")' class="text-slate-400 hover:text-rose-600 bg-white hover:bg-rose-50 p-2.5 rounded-xl transition-all duration-200 inline-block ring-1 ring-slate-200 hover:ring-rose-200 shadow-sm hover:shadow-md" title="Hapus User">
+                        <button data-user="${safeEncUser}" onclick="deleteUser(this.dataset.user)" class="text-slate-400 hover:text-rose-600 bg-white hover:bg-rose-50 p-2.5 rounded-xl transition-all duration-200 inline-block ring-1 ring-slate-200 hover:ring-rose-200 shadow-sm hover:shadow-md" title="Hapus User">
                             <i data-lucide="trash-2" class="w-4 h-4"></i>
                         </button>
                     </td>
@@ -884,7 +879,7 @@
         }
 
         // --- FUNGSI UNTUK MODAL TAMBAH/EDIT ---
-        function openModal(mode, userData = null) {
+        function openModal(mode, encUser = null) {
             currentMode = mode;
             const modal = document.getElementById('userModal');
             const title = document.getElementById('modalTitle');
@@ -903,17 +898,26 @@
                 // Set Otomatis Tanggal Hari Ini & Paket Default (1 Bulan) untuk Pembelian Baru
                 document.getElementById('inpPurchaseDate').value = new Date().toISOString().split('T')[0];
                 document.getElementById('inpPackage').value = "1";
-                calculateExpiry(); // Langsung isi kotak expiry date
+                calculateExpiry(); 
                 
             } else {
                 title.textContent = "Edit Data User";
+                
+                // Mekanisme Penguraian User Aman
+                const username = decodeURIComponent(encUser);
+                const userData = allUsersData.find(u => String(u.username) === username);
+                
+                if (!userData) {
+                    showToast("Data User tidak ditemukan!", true);
+                    return;
+                }
+
                 document.getElementById('oldUsername').value = userData.username;
                 document.getElementById('inpUsername').value = userData.username;
                 document.getElementById('inpPassword').value = userData.password;
                 document.getElementById('inpLicense').value = userData.licenseCode;
-                document.getElementById('inpPackage').value = userData.package || ""; // Tarik data paket (jika ada)
+                document.getElementById('inpPackage').value = userData.package || ""; 
                 
-                // Format Purchase Date (Kolom F) jika ada
                 let cleanPurchase = userData.purchaseDate;
                 if (cleanPurchase && cleanPurchase !== '-') {
                     const pDateObj = new Date(cleanPurchase);
@@ -926,7 +930,6 @@
                 }
                 document.getElementById('inpPurchaseDate').value = cleanPurchase || "";
 
-                // Format Expiry Date
                 let cleanExpiry = userData.expiryDate;
                 if (cleanExpiry && cleanExpiry !== '-' && cleanExpiry.toLowerCase() !== 'aktif') {
                     const dateObj = new Date(cleanExpiry);
@@ -956,7 +959,7 @@
                 licenseCode: document.getElementById('inpLicense').value.trim(),
                 expiryDate: document.getElementById('inpExpiry').value.trim(),
                 purchaseDate: document.getElementById('inpPurchaseDate').value.trim(), 
-                package: document.getElementById('inpPackage').value.trim() // Tambahan Payload Paket
+                package: document.getElementById('inpPackage').value.trim() 
             };
 
             if (!newData.username || !newData.password) {
@@ -1004,6 +1007,20 @@
             document.getElementById('invDateEmit').textContent = emitDateStr;
             document.getElementById('stampDate').textContent = emitDate.toLocaleDateString('id-ID', {day: '2-digit', month: '2-digit', year: 'numeric'});
             
+            // Format Expiry Date untuk di PDF Invoice
+            let cleanExpiry = userData.expiryDate;
+            if (cleanExpiry && cleanExpiry !== '-' && cleanExpiry.toLowerCase() !== 'aktif') {
+                const dateObj = new Date(cleanExpiry);
+                if (!isNaN(dateObj.getTime())) {
+                    cleanExpiry = dateObj.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+                }
+            } else if (cleanExpiry && cleanExpiry.toLowerCase() === 'aktif') {
+                cleanExpiry = 'Tanpa Batas';
+            } else {
+                cleanExpiry = '-';
+            }
+            document.getElementById('invExpiryDateDisplay').textContent = cleanExpiry;
+            
             document.getElementById('invToName').textContent = userData.username;
             document.getElementById('invToPass').textContent = userData.password;
             document.getElementById('invLicCode').textContent = userData.licenseCode || '-';
@@ -1017,7 +1034,11 @@
             document.getElementById('invTotalBig').textContent = formattedPrice;
         }
 
-        function openInvoiceSettings(userData) {
+        function openInvoiceSettings(encUser) {
+            const username = decodeURIComponent(encUser);
+            const userData = allUsersData.find(u => String(u.username) === username);
+            if (!userData) return;
+            
             currentInvoiceUser = userData;
             
             let purchaseDateStr = new Date().toISOString().split('T')[0];
@@ -1031,17 +1052,23 @@
                 }
             }
             
+            // Set Tanggal Paten dari Kolom F
             document.getElementById('setInvDate').value = purchaseDateStr;
             
+            // Set Paket Paten dari Kolom G
+            let userPkg = userData.package;
+            if (!userPkg || userPkg === "" || userPkg === "-") {
+                 userPkg = "1";
+            }
+            document.getElementById('setInvPackage').value = userPkg;
+            
+            // Load LocalStorage hanya untuk Tipe dan Harga jika sudah pernah tersimpan
             const savedData = localStorage.getItem('invoice_' + userData.username);
             if (savedData) {
                 const parsed = JSON.parse(savedData);
-                document.getElementById('setInvPackage').value = parsed.pkg;
-                document.getElementById('setInvType').value = parsed.type;
-                document.getElementById('setInvPrice').value = parsed.price;
+                if(parsed.type) document.getElementById('setInvType').value = parsed.type;
+                if(parsed.price) document.getElementById('setInvPrice').value = parsed.price;
             } else {
-                // Jika belum ada invoice tersimpan, ambil paket dari data tabel jika ada
-                document.getElementById('setInvPackage').value = userData.package || "1";
                 document.getElementById('setInvType').value = "Basic";
                 document.getElementById('setInvPrice').value = "240000";
             }
@@ -1080,7 +1107,11 @@
             setTimeout(() => { modal.setAttribute('data-state', 'open'); }, 400); 
         }
 
-        function viewInvoice(userData) {
+        function viewInvoice(encUser) {
+            const username = decodeURIComponent(encUser);
+            const userData = allUsersData.find(u => String(u.username) === username);
+            if (!userData) return;
+            
             currentInvoiceUser = userData;
             const savedData = localStorage.getItem('invoice_' + userData.username);
             
@@ -1100,14 +1131,15 @@
             setTimeout(() => { modal.classList.add('hidden'); }, 300);
         }
 
+        // FUNGSI UNDUH (Diperbarui Untuk Support A4 dan Custom CORS)
         function downloadInvoicePDF() {
             const element = document.getElementById('invoiceContent');
             const opt = {
-                margin:       [0.3, 0, 0.3, 0], 
+                margin:       0, // Dibuat 0 karena margin diatur lewat padding px-10 py-10 div konten
                 filename:     `Invoice_HiCare_${currentInvoiceUser.username}.pdf`,
                 image:        { type: 'jpeg', quality: 1.0 },
-                html2canvas:  { scale: 2, useCORS: true, logging: false },
-                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+                html2canvas:  { scale: 2, useCORS: true, allowTaint: true }, // Penambahan allowTaint menjamin logo eksternal bisa tersedot
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' } // Ukuran A4 paten
             };
 
             showToast("Sedang menyiapkan file PDF...", false);
@@ -1122,7 +1154,8 @@
         // --- FUNGSI UNTUK HAPUS USER ---
         let userToDelete = null;
 
-        function deleteUser(username) {
+        function deleteUser(encUser) {
+            const username = decodeURIComponent(encUser);
             userToDelete = username;
             document.getElementById('deleteMsg').innerHTML = `Apakah Anda yakin ingin menghapus akses untuk <b class="text-slate-700">${username}</b>?<br>Tindakan ini tidak dapat dibatalkan.`;
             const modal = document.getElementById('deleteModal');

@@ -91,7 +91,38 @@
 </head>
 <body class="text-slate-800 font-sans h-screen overflow-hidden flex flex-col selection:bg-indigo-500/30 selection:text-indigo-900 relative">
 
-    <!-- Efek Pendaran Latar Belakang -->
+    <!-- LAYER LOGIN SCREEN -->
+    <div id="loginScreen" class="fixed inset-0 bg-[#0b1120] z-[100] flex items-center justify-center transition-opacity duration-500">
+        <!-- Efek Pendaran Latar Belakang Khusus Login -->
+        <div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-[radial-gradient(circle,rgba(99,102,241,0.15)_0%,rgba(255,255,255,0)_70%)] blur-[80px] pointer-events-none"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-[radial-gradient(circle,rgba(14,165,233,0.1)_0%,rgba(255,255,255,0)_70%)] blur-[100px] pointer-events-none"></div>
+
+        <div class="bg-white/10 backdrop-blur-xl rounded-[2.5rem] shadow-2xl w-full max-w-sm p-10 border border-white/10 relative z-10 text-center transform transition-transform scale-100">
+            <div class="flex justify-center mb-6">
+                <img src="https://raw.githubusercontent.com/rzcll/WebsiteHiCare/main/LOGO%20HiCare.png" alt="Logo HiCare" class="w-24 h-24 object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+            </div>
+            <h2 class="text-2xl font-black text-white tracking-wide">HiCare <span class="text-indigo-400">Control</span></h2>
+            <p class="text-[11px] text-slate-400 font-bold mb-8 uppercase tracking-[0.2em] mt-1">Admin Authentication</p>
+            
+            <div class="space-y-5 text-left">
+                <div class="relative group">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <i data-lucide="user" class="w-5 h-5 text-slate-400 group-focus-within:text-indigo-400 transition-colors"></i>
+                    </div>
+                    <input type="text" id="loginUsername" placeholder="Masukkan Username..." 
+                        class="w-full bg-[#1e293b]/60 border border-slate-700/60 rounded-2xl pl-12 pr-4 py-4 outline-none focus:ring-2 focus:ring-indigo-500/50 text-white placeholder-slate-400 transition-all shadow-inner font-medium"
+                        onkeydown="if(event.key === 'Enter') checkLogin()">
+                </div>
+                
+                <button onclick="checkLogin()" class="w-full py-4 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white rounded-2xl font-bold shadow-[0_8px_20px_-3px_rgba(79,70,229,0.4)] transition-all transform hover:-translate-y-0.5 flex justify-center items-center">
+                    <i data-lucide="log-in" class="w-5 h-5 mr-2"></i> Masuk Dashboard
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- END LAYER LOGIN SCREEN -->
+
+    <!-- Efek Pendaran Latar Belakang Utama -->
     <div class="ambient-glow-1"></div>
     <div class="ambient-glow-2"></div>
 
@@ -196,7 +227,7 @@
                                     </div>
                                     <div class="flex flex-col items-center">
                                         <span class="text-base font-bold text-slate-700">Sinkronisasi Database</span>
-                                        <span class="text-xs font-medium text-slate-400 mt-1">Mengambil data terbaru dari server...</span>
+                                        <span class="text-xs font-medium text-slate-400 mt-1">Menunggu otentikasi login...</span>
                                     </div>
                                 </div>
                             </td>
@@ -541,7 +572,7 @@
         </div>
     </div>
 
-    <!-- Toast Notification -->
+    <!-- Toast Notification (MENGGUNAKAN POINTER-EVENTS-NONE AGAR TIDAK MENGHALANGI KLIK) -->
     <div id="toast" class="fixed bottom-8 right-8 bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-[0_15px_40px_-5px_rgba(0,0,0,0.3)] transform translate-y-24 opacity-0 transition-all duration-400 z-50 flex items-center font-semibold text-sm border border-slate-700/80 backdrop-blur-md pointer-events-none">
         <div class="p-1.5 rounded-full bg-indigo-500/20 mr-3">
             <i data-lucide="info" class="w-5 h-5 text-indigo-400" id="toastIcon"></i>
@@ -559,9 +590,33 @@
         let currentSort = 'none'; 
 
         window.addEventListener('DOMContentLoaded', () => {
-            if(API_URL) loadUsers();
+            // Cek status sesi login (Hanya muat aplikasi jika sudah pernah login di sesi ini)
+            if (sessionStorage.getItem('hicare_admin_logged_in') === 'true') {
+                document.getElementById('loginScreen').classList.add('hidden');
+                if(API_URL) loadUsers();
+            }
         });
 
+        // FUNGSI AUTHENTICATION (Login Screen)
+        function checkLogin() {
+            const username = document.getElementById('loginUsername').value.trim();
+            // Mengecek apakah input adalah alinur (tidak sensitif huruf besar/kecil)
+            if (username.toLowerCase() === 'alinur') {
+                sessionStorage.setItem('hicare_admin_logged_in', 'true'); // Simpan sesi
+                
+                const loginScreen = document.getElementById('loginScreen');
+                loginScreen.style.opacity = '0'; // Animasi transisi hilang
+                
+                setTimeout(() => {
+                    loginScreen.classList.add('hidden'); // Sembunyikan layar login sepenuhnya
+                    if(API_URL) loadUsers(); // Mulai panggil data ke tabel
+                }, 500);
+            } else {
+                showToast("Username tidak valid!", true);
+            }
+        }
+
+        // Memastikan toast notification tidak menghalangi tombol klik dengan pointer-events-none
         function showToast(message, isError = false) {
             const toast = document.getElementById('toast');
             const icon = document.getElementById('toastIcon');

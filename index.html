@@ -23,9 +23,13 @@
         }
     </script>
     <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
     <!-- html2pdf.js untuk export PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
         /* Animations */
         .toast-enter { transform: translateY(100%); opacity: 0; }
@@ -99,7 +103,7 @@
 
         <div class="bg-white/10 backdrop-blur-xl rounded-[2.5rem] shadow-2xl w-full max-w-sm p-10 border border-white/10 relative z-10 text-center transform transition-transform scale-100">
             <div class="flex justify-center mb-6">
-                <img src="https://raw.githubusercontent.com/rzcll/WebsiteHiCare/main/LOGO%20HiCare.png" alt="Logo HiCare" class="w-24 h-24 object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                <img src="https://github.com/rzcll/WebsiteHiCare/blob/main/LOGO%20HiCare.png?raw=true" alt="Logo HiCare" class="w-24 h-24 object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">
             </div>
             <h2 class="text-2xl font-black text-white tracking-wide">HiCare <span class="text-indigo-400">Control</span></h2>
             <p class="text-[11px] text-slate-400 font-bold mb-8 uppercase tracking-[0.2em] mt-1">Admin Authentication</p>
@@ -120,7 +124,6 @@
             </div>
         </div>
     </div>
-    <!-- END LAYER LOGIN SCREEN -->
 
     <!-- Efek Pendaran Latar Belakang Utama -->
     <div class="ambient-glow-1"></div>
@@ -150,7 +153,6 @@
                 </div>
                 
                 <div class="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-4 w-full md:w-auto shrink-0 justify-end">
-                    
                     <!-- Search -->
                     <div class="relative w-full sm:w-64 md:w-72 group">
                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -175,14 +177,16 @@
 
                         <div class="w-px h-8 bg-slate-700 mx-1 hidden sm:block rounded-full"></div>
 
-                        <a id="btnPanel" href="#" target="_blank" 
-                            class="hidden p-2.5 bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-indigo-400 rounded-2xl font-medium transition-all duration-300 shadow-sm flex items-center hover:-translate-y-0.5 backdrop-blur-sm" title="Buka Panel Kontrol">
+                        <a id="btnPanel" href="https://control.zaplink.net/" target="_blank" 
+                            class="p-2.5 sm:px-4 sm:py-2.5 bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-indigo-400 rounded-2xl font-medium transition-all duration-300 shadow-sm flex items-center hover:-translate-y-0.5 backdrop-blur-sm" title="Buka Panel Kontrol">
                             <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                            <span class="hidden sm:inline sm:ml-2 text-sm">Control Panel</span>
                         </a>
 
-                        <a id="btnAplikasi" href="#" target="_blank" 
-                            class="hidden p-2.5 bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-emerald-400 rounded-2xl font-medium transition-all duration-300 shadow-sm flex items-center hover:-translate-y-0.5 backdrop-blur-sm" title="Buka Aplikasi">
+                        <a id="btnAplikasi" href="https://drive.google.com/drive/folders/1scPFSNXauFBrYnL75Oy68S6U1HEgky-e" target="_blank" 
+                            class="p-2.5 sm:px-4 sm:py-2.5 bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-emerald-400 rounded-2xl font-medium transition-all duration-300 shadow-sm flex items-center hover:-translate-y-0.5 backdrop-blur-sm" title="Buka Aplikasi">
                             <i data-lucide="external-link" class="w-4 h-4"></i>
+                            <span class="hidden sm:inline sm:ml-2 text-sm">Aplikasi</span>
                         </a>
                     </div>
                 </div>
@@ -240,8 +244,10 @@
 
     <!-- Modal Form (Add/Edit) -->
     <div id="userModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center z-50 px-4 transition-all duration-300 opacity-0 data-[state=open]:opacity-100">
-        <div class="bg-white/90 backdrop-blur-xl rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.3)] w-full max-w-lg overflow-hidden transform transition-all scale-95 data-[state=open]:scale-100 border border-white/50 ring-1 ring-slate-900/5">
-            <div class="px-8 py-6 border-b border-slate-100/80 flex justify-between items-center bg-white/50">
+        <!-- max-h-[90vh] membuat modal berukuran 90% layar agar rapi, overflow-hidden memastikan isi tidak luber -->
+        <div class="bg-white/90 backdrop-blur-xl rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.3)] w-full max-w-lg overflow-hidden transform transition-all scale-95 data-[state=open]:scale-100 border border-white/50 ring-1 ring-slate-900/5 flex flex-col max-h-[90vh]">
+            <!-- Header Modal -->
+            <div class="px-8 py-6 border-b border-slate-100/80 flex justify-between items-center bg-white/50 shrink-0">
                 <div class="flex items-center space-x-4">
                     <div class="bg-gradient-to-br from-indigo-100 to-indigo-50 p-3 rounded-2xl shadow-inner border border-indigo-100/50">
                         <i data-lucide="user-cog" class="w-6 h-6 text-indigo-600"></i>
@@ -253,7 +259,8 @@
                 </button>
             </div>
             
-            <div class="p-8 space-y-6 bg-slate-50/30">
+            <!-- Isi Modal Bisa di Scroll (overflow-y-auto flex-1) -->
+            <div class="p-8 space-y-6 bg-slate-50/30 overflow-y-auto no-scrollbar flex-1">
                 <input type="hidden" id="oldUsername">
                 <div class="space-y-1.5">
                     <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest pl-1">Username</label>
@@ -321,8 +328,16 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Template Pesan -->
+                <div class="space-y-1.5">
+                    <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest pl-1">Template Pesan</label>
+                    <textarea id="inpTemplatePesan" rows="6" class="w-full border border-slate-200/80 rounded-2xl p-4 outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all shadow-sm bg-white text-sm font-semibold text-slate-800 placeholder-slate-300 resize-none leading-relaxed"></textarea>
+                </div>
             </div>
-            <div class="px-8 py-5 border-t border-slate-100/80 bg-white/50 flex justify-end space-x-3">
+            
+            <!-- Footer / Tombol Modal -->
+            <div class="px-8 py-5 border-t border-slate-100/80 bg-white/50 flex justify-end space-x-3 shrink-0">
                 <button onclick="closeModal()" class="px-6 py-3 text-slate-600 bg-white border border-slate-200/80 rounded-2xl hover:bg-slate-50 hover:text-slate-900 transition-all font-bold shadow-sm text-sm hover:shadow">Batal</button>
                 <button onclick="saveUser()" id="btnSave" class="px-6 py-3 bg-indigo-600 text-white rounded-2xl hover:bg-indigo-700 transition-all shadow-[0_8px_15px_-3px_rgba(79,70,229,0.4)] hover:shadow-[0_12px_20px_-5px_rgba(79,70,229,0.5)] font-bold flex items-center text-sm transform hover:-translate-y-0.5">
                     <i data-lucide="save" class="w-4 h-4 mr-2"></i> Simpan Data
@@ -350,17 +365,18 @@
                 <p class="text-xs font-semibold text-slate-500 leading-relaxed mb-4">Silakan atur detail paket dan harga untuk pengguna ini. Data akan otomatis tersimpan.</p>
                 
                 <div class="space-y-1.5">
-                    <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest pl-1">Tanggal Terbit (Data Kolom F)</label>
+                    <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest pl-1">Tanggal Terbit</label>
                     <input type="date" id="setInvDate" readonly class="w-full border border-slate-200/80 rounded-2xl px-4 py-3.5 outline-none shadow-sm bg-slate-100 text-sm font-bold text-slate-500 cursor-not-allowed">
                 </div>
 
                 <div class="grid grid-cols-2 gap-5">
                     <div class="space-y-1.5">
-                        <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest pl-1">Pilihan Paket (Data Kolom G)</label>
+                        <label class="block text-[11px] font-black text-slate-500 uppercase tracking-widest pl-1">Pilihan Paket</label>
                         <select id="setInvPackage" disabled class="w-full border border-slate-200/80 rounded-2xl px-4 py-3.5 outline-none shadow-sm bg-slate-100 text-sm font-bold text-slate-500 cursor-not-allowed appearance-none">
                             <option value="1">1 Bulan</option>
                             <option value="3">3 Bulan</option>
                             <option value="6">6 Bulan</option>
+                            <option value="12">12 Bulan</option>
                             <option value="16">16 Bulan</option>
                         </select>
                     </div>
@@ -395,7 +411,7 @@
 
     <!-- Modal Invoice PDF (Actual Invoice) -->
     <div id="invoiceModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center z-50 px-4 transition-all duration-300 opacity-0 data-[state=open]:opacity-100">
-        <div class="bg-white/95 backdrop-blur-xl rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.3)] w-full max-w-4xl overflow-hidden transform transition-all scale-95 data-[state=open]:scale-100 border border-white/50 flex flex-col max-h-[95vh]">
+        <div class="bg-white/95 backdrop-blur-xl rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.3)] w-full max-w-5xl overflow-hidden transform transition-all scale-95 data-[state=open]:scale-100 border border-white/50 flex flex-col h-[95vh]">
             <div class="px-8 py-5 border-b border-slate-100/80 flex justify-between items-center bg-white/80 sticky top-0 z-20">
                 <div class="flex items-center space-x-3">
                     <div class="bg-indigo-50 p-2.5 rounded-xl text-indigo-600">
@@ -424,11 +440,10 @@
                     </div>
                 </div>
 
-                <!-- Header Invoice (Pengurangan margin agar muat 1 layar) -->
+                <!-- Header Invoice -->
                 <div class="flex justify-between items-start mb-8 border-b border-slate-100 pb-6">
                     <div class="flex items-center space-x-5">
-                        <!-- Menggunakan raw link dan crossorigin untuk menjamin logo tercetak -->
-                        <img src="https://raw.githubusercontent.com/rzcll/WebsiteHiCare/main/LOGO%20HiCare.png" alt="Logo" class="w-16 h-16 object-contain" crossorigin="anonymous">
+                        <img src="https://github.com/rzcll/WebsiteHiCare/blob/main/LOGO%20HiCare.png?raw=true" alt="Logo" class="w-16 h-16 object-contain" crossorigin="anonymous">
                         <div>
                             <h1 class="text-3xl font-black text-slate-900 leading-none tracking-tight mb-1">HiCare Smart Reminder</h1>
                             <p class="text-xs text-slate-400 font-bold uppercase tracking-[0.2em]">www.hicare.site</p>
@@ -452,7 +467,6 @@
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Tanggal Terbit</p>
                         <p class="font-black text-slate-800 text-sm" id="invDateEmit">-</p>
                     </div>
-                    <!-- Tampilan Expiry Date -->
                     <div class="p-5 text-center bg-rose-50/30">
                         <p class="text-[10px] font-bold text-rose-400 uppercase tracking-widest mb-1.5">Expiry Date</p>
                         <p class="font-black text-slate-800 text-sm" id="invExpiryDateDisplay">-</p>
@@ -525,7 +539,6 @@
                         <div class="mt-4 w-48 text-center relative">
                             <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Digital Signature</p>
                             
-                            <!-- Gambar QR Statis dengan crossorigin -->
                             <div class="relative flex justify-center items-center my-2 h-20 w-20 mx-auto">
                                 <img src="https://raw.githubusercontent.com/rzcll/HiCare-Control/main/QR%20Code.png" alt="QR Code Signature" class="w-full h-full object-contain bg-white p-1 border border-slate-200 rounded-lg shadow-sm" crossorigin="anonymous">
                             </div>
@@ -572,7 +585,7 @@
         </div>
     </div>
 
-    <!-- Toast Notification (MENGGUNAKAN POINTER-EVENTS-NONE AGAR TIDAK MENGHALANGI KLIK) -->
+    <!-- Toast Notification -->
     <div id="toast" class="fixed bottom-8 right-8 bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-[0_15px_40px_-5px_rgba(0,0,0,0.3)] transform translate-y-24 opacity-0 transition-all duration-400 z-50 flex items-center font-semibold text-sm border border-slate-700/80 backdrop-blur-md pointer-events-none">
         <div class="p-1.5 rounded-full bg-indigo-500/20 mr-3">
             <i data-lucide="info" class="w-5 h-5 text-indigo-400" id="toastIcon"></i>
@@ -581,42 +594,49 @@
     </div>
 
     <script>
-        lucide.createIcons();
+        // Fungsi helper aman untuk me-render icon
+        function refreshIcons() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
 
-        const API_URL = "https://script.google.com/macros/s/AKfycbyRMBz6isIqB_q_ftcxGFqISCuY7Vxl9oU4zIePzImLH6X7sfGW57XEmj8wug6auGYB/exec";
+        // --- KONFIGURASI SUPABASE ---
+        const SUPABASE_URL = 'https://fxgbfvvbyeoyybywyyyc.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ4Z2JmdnZieWVveXlieXd5eXljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAxNzAwNjQsImV4cCI6MjA5NTc0NjA2NH0.t4uioQclA8zHqaP2Y2rwpTLhJl4y_ObZK8Fn1B-024s';
+        
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        // ------------------------------
 
         let currentMode = 'add'; 
         let allUsersData = []; 
         let currentSort = 'none'; 
 
         window.addEventListener('DOMContentLoaded', () => {
-            // Cek status sesi login (Hanya muat aplikasi jika sudah pernah login di sesi ini)
+            refreshIcons();
+
             if (sessionStorage.getItem('hicare_admin_logged_in') === 'true') {
                 document.getElementById('loginScreen').classList.add('hidden');
-                if(API_URL) loadUsers();
+                loadUsers();
             }
         });
 
-        // FUNGSI AUTHENTICATION (Login Screen)
         function checkLogin() {
             const username = document.getElementById('loginUsername').value.trim();
-            // Mengecek apakah input adalah alinur (tidak sensitif huruf besar/kecil)
             if (username.toLowerCase() === 'alinur') {
-                sessionStorage.setItem('hicare_admin_logged_in', 'true'); // Simpan sesi
-                
+                sessionStorage.setItem('hicare_admin_logged_in', 'true');
                 const loginScreen = document.getElementById('loginScreen');
-                loginScreen.style.opacity = '0'; // Animasi transisi hilang
+                loginScreen.style.opacity = '0';
                 
                 setTimeout(() => {
-                    loginScreen.classList.add('hidden'); // Sembunyikan layar login sepenuhnya
-                    if(API_URL) loadUsers(); // Mulai panggil data ke tabel
+                    loginScreen.classList.add('hidden');
+                    loadUsers(); 
                 }, 500);
             } else {
                 showToast("Username tidak valid!", true);
             }
         }
 
-        // Memastikan toast notification tidak menghalangi tombol klik dengan pointer-events-none
         function showToast(message, isError = false) {
             const toast = document.getElementById('toast');
             const icon = document.getElementById('toastIcon');
@@ -634,7 +654,7 @@
                 icon.parentElement.className = 'p-1.5 rounded-full bg-emerald-500/20 mr-3';
                 icon.className = 'w-5 h-5 text-emerald-400';
             }
-            lucide.createIcons();
+            refreshIcons();
 
             toast.style.transform = 'translateY(0)';
             toast.style.opacity = '1';
@@ -645,84 +665,34 @@
             }, 3500);
         }
 
-        async function fetchAPI(payload) {
-            if (!API_URL) {
-                showToast("URL API Google Script belum diatur!", true);
-                return null;
-            }
-
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    body: JSON.stringify(payload),
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-                });
-                
-                const textData = await response.text();
-                
-                try {
-                    return JSON.parse(textData);
-                } catch (jsonError) {
-                    console.error("Response server bermasalah:", textData);
-                    if (textData.includes("<html") || textData.includes("<HTML")) {
-                        showToast("Error: Deploy Google Script ke versi terbaru!", true);
-                    } else {
-                        showToast("Gagal membaca balasan dari server.", true);
-                    }
-                    return null;
-                }
-            } catch (error) {
-                showToast("Gagal terhubung ke server: " + error.message, true);
-                return null;
-            }
-        }
-
         async function loadUsers() {
             const btn = document.getElementById('btnConnect');
             const icon = document.getElementById('iconLoad');
             const tbody = document.getElementById('userTableBody');
             
-            if(!API_URL) return;
-
             icon.classList.add('animate-spin');
             if (btn) btn.disabled = true;
             
             tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-32 text-center"><div class="flex flex-col items-center justify-center space-y-4"><div class="p-5 bg-indigo-50/50 border border-indigo-100 rounded-full shadow-inner relative overflow-hidden"><div class="absolute inset-0 bg-indigo-500/10 animate-pulse"></div><i data-lucide="loader-2" class="w-10 h-10 animate-spin text-indigo-600 relative z-10"></i></div><div class="flex flex-col items-center"><span class="text-base font-bold text-slate-700">Sinkronisasi Database</span><span class="text-xs font-medium text-slate-400 mt-1">Mengambil data terbaru dari server...</span></div></div></td></tr>`;
-            lucide.createIcons();
+            refreshIcons();
 
-            const result = await fetchAPI({ action: "getUsers" });
+            const { data, error } = await supabaseClient.from('users').select('*');
             
             icon.classList.remove('animate-spin');
             if (btn) btn.disabled = false;
 
-            if (result && result.success) {
-                const btnApp = document.getElementById('btnAplikasi');
-                if (result.appLink && result.appLink !== "" && result.appLink !== "#") {
-                    btnApp.href = result.appLink;
-                    btnApp.classList.remove('hidden'); 
-                } else {
-                    btnApp.classList.add('hidden'); 
-                }
-
-                const btnPanel = document.getElementById('btnPanel');
-                if (result.panelLink && result.panelLink !== "" && result.panelLink !== "#") {
-                    btnPanel.href = result.panelLink;
-                    btnPanel.classList.remove('hidden'); 
-                } else {
-                    btnPanel.classList.add('hidden'); 
-                }
-
-                allUsersData = result.data; 
+            if (error) {
+                tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-20 text-center"><div class="inline-block p-4 rounded-full bg-rose-50 border border-rose-100 mb-3"><i data-lucide="alert-triangle" class="w-8 h-8 text-rose-500"></i></div><h3 class="text-lg font-bold text-slate-800">Gagal Memuat Data</h3><p class="text-sm text-rose-500 font-medium mt-1">${error.message}</p></td></tr>`;
+                refreshIcons();
+                showToast("Error: " + error.message, true);
+            } else {
+                allUsersData = data || []; 
                 document.getElementById('searchInput').value = ""; 
                 currentSort = 'none';
                 document.getElementById('sortIcon').setAttribute('data-lucide', 'chevrons-up-down');
 
                 applyFilterAndSort(); 
                 showToast("Database berhasil disinkronkan");
-            } else if (result) {
-                tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-20 text-center"><div class="inline-block p-4 rounded-full bg-rose-50 border border-rose-100 mb-3"><i data-lucide="alert-triangle" class="w-8 h-8 text-rose-500"></i></div><h3 class="text-lg font-bold text-slate-800">Gagal Memuat Data</h3><p class="text-sm text-rose-500 font-medium mt-1">${result.message}</p></td></tr>`;
-                lucide.createIcons();
-                showToast(result.message, true);
             }
         }
 
@@ -745,7 +715,7 @@
             if (currentSort === 'none') { icon.setAttribute('data-lucide', 'chevrons-up-down'); } 
             else if (currentSort === 'desc') { icon.setAttribute('data-lucide', 'chevron-down'); } 
             else { icon.setAttribute('data-lucide', 'chevron-up'); }
-            lucide.createIcons();
+            refreshIcons();
 
             applyFilterAndSort();
         }
@@ -804,7 +774,7 @@
             
             if (data.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-24 text-center"><div class="flex flex-col items-center justify-center space-y-3"><div class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mb-2 shadow-inner"><i data-lucide="search-x" class="w-8 h-8 text-slate-400"></i></div><span class="text-base font-bold text-slate-700">Data tidak ditemukan</span><span class="text-sm font-medium text-slate-400">Coba gunakan kata kunci pencarian yang lain.</span></div></td></tr>`;
-                lucide.createIcons();
+                refreshIcons();
                 return;
             }
 
@@ -838,7 +808,7 @@
                 const indicatorDot = isExpired ? "bg-rose-500" : (displayExpiry.toLowerCase() === 'aktif' ? "bg-emerald-500" : "bg-indigo-500");
                 const sisaWaktuClass = isExpired ? "text-rose-600 font-extrabold" : "text-slate-600 font-bold";
                 
-                // PENTING: Pengikatan Data Aman (Bebas Error Karakter) menggunakan `encodeURIComponent`
+                // PENTING: Pengikatan Data Aman
                 const safeEncUser = encodeURIComponent(String(user.username));
 
                 const savedInvoice = localStorage.getItem('invoice_' + user.username);
@@ -895,14 +865,10 @@
                         </div>
                     </td>
                     <td class="px-8 py-5 text-sm text-right space-x-1.5">
-                        
-                        <!-- Tombol Invoice Dinamis -->
                         ${invoiceButtons}
-
                         <button data-user="${safeEncUser}" onclick="openModal('edit', this.dataset.user)" class="text-slate-400 hover:text-indigo-600 bg-white hover:bg-indigo-50 p-2.5 rounded-xl transition-all duration-200 inline-block ring-1 ring-slate-200 hover:ring-indigo-200 shadow-sm hover:shadow-md" title="Edit Data User">
                             <i data-lucide="pencil" class="w-4 h-4"></i>
                         </button>
-
                         <button data-user="${safeEncUser}" onclick="deleteUser(this.dataset.user)" class="text-slate-400 hover:text-rose-600 bg-white hover:bg-rose-50 p-2.5 rounded-xl transition-all duration-200 inline-block ring-1 ring-slate-200 hover:ring-rose-200 shadow-sm hover:shadow-md" title="Hapus User">
                             <i data-lucide="trash-2" class="w-4 h-4"></i>
                         </button>
@@ -910,10 +876,9 @@
                 `;
                 tbody.appendChild(tr);
             });
-            lucide.createIcons();
+            refreshIcons();
         }
 
-        // --- FUNGSI UNTUK KALKULASI OTOMATIS EXPIRY DATE ---
         function calculateExpiry() {
             const purchaseDateStr = document.getElementById('inpPurchaseDate').value;
             const packageVal = document.getElementById('inpPackage').value;
@@ -922,7 +887,6 @@
                 const packageMonths = parseInt(packageVal);
                 const date = new Date(purchaseDateStr);
                 
-                // Menambahkan hari: (Misal: 1 bulan = 30 hari)
                 date.setDate(date.getDate() + (packageMonths * 30));
 
                 const y = date.getFullYear();
@@ -939,6 +903,9 @@
             const modal = document.getElementById('userModal');
             const title = document.getElementById('modalTitle');
             
+            // Format Template Pesan Standar
+            const defaultTemplate = `Selamat Pagi, apa benar ini dengan {{Panggilan}} {{Name}}\nAlamat : Desa {{Alamat}}\n\nPerkenalkan saya petugas dari UPT Puskesmas ............., mohon ijin untuk mengingatkan jika {{Panggilan}} {{Name}} waktunya untuk kontrol Hipertensi atau Darah Tinggi ke Puskesmas  ..............\n\n_di tunggu kehadiranya dan semoga sehat selalu_`;
+
             modal.classList.remove('hidden');
             setTimeout(() => { modal.setAttribute('data-state', 'open'); }, 10);
 
@@ -950,7 +917,9 @@
                 document.getElementById('inpLicense').value = "";
                 document.getElementById('inpExpiry').value = "";
                 
-                // Set Otomatis Tanggal Hari Ini & Paket Default (1 Bulan) untuk Pembelian Baru
+                // Masukkan Template Otomatis Disini
+                document.getElementById('inpTemplatePesan').value = defaultTemplate;
+                
                 document.getElementById('inpPurchaseDate').value = new Date().toISOString().split('T')[0];
                 document.getElementById('inpPackage').value = "1";
                 calculateExpiry(); 
@@ -958,7 +927,6 @@
             } else {
                 title.textContent = "Edit Data User";
                 
-                // Mekanisme Penguraian User Aman
                 const username = decodeURIComponent(encUser);
                 const userData = allUsersData.find(u => String(u.username) === username);
                 
@@ -972,6 +940,9 @@
                 document.getElementById('inpPassword').value = userData.password;
                 document.getElementById('inpLicense').value = userData.licenseCode;
                 document.getElementById('inpPackage').value = userData.package || ""; 
+                
+                // Ambil template dari data jika ada, jika kosong pakai default
+                document.getElementById('inpTemplatePesan').value = userData.templatePesan || defaultTemplate;
                 
                 let cleanPurchase = userData.purchaseDate;
                 if (cleanPurchase && cleanPurchase !== '-') {
@@ -1008,13 +979,15 @@
         async function saveUser() {
             const btn = document.getElementById('btnSave');
             const oldUser = document.getElementById('oldUsername').value;
+            
             const newData = {
                 username: document.getElementById('inpUsername').value.trim(),
                 password: document.getElementById('inpPassword').value.trim(),
                 licenseCode: document.getElementById('inpLicense').value.trim(),
                 expiryDate: document.getElementById('inpExpiry').value.trim(),
                 purchaseDate: document.getElementById('inpPurchaseDate').value.trim(), 
-                package: document.getElementById('inpPackage').value.trim() 
+                package: document.getElementById('inpPackage').value.trim(),
+                templatePesan: document.getElementById('inpTemplatePesan').value.trim() 
             };
 
             if (!newData.username || !newData.password) {
@@ -1024,21 +997,27 @@
 
             btn.disabled = true;
             btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 mr-2 animate-spin"></i> Memproses...`;
-            lucide.createIcons();
+            refreshIcons();
 
-            let payload = currentMode === 'add' ? { action: "addUser", data: newData } : { action: "updateUser", oldUsername: oldUser, data: newData };
-            const result = await fetchAPI(payload);
+            let resultError = null;
+            if (currentMode === 'add') {
+                const { error } = await supabaseClient.from('users').insert([newData]);
+                resultError = error;
+            } else {
+                const { error } = await supabaseClient.from('users').update(newData).eq('username', oldUser);
+                resultError = error;
+            }
             
             btn.disabled = false;
             btn.innerHTML = `<i data-lucide="save" class="w-4 h-4 mr-2"></i> Simpan Data`;
-            lucide.createIcons();
+            refreshIcons();
 
-            if (result && result.success) {
-                showToast(result.message);
+            if (!resultError) {
+                showToast(currentMode === 'add' ? "Data user ditambahkan" : "Data user diperbarui");
                 closeModal();
                 loadUsers(); 
-            } else if (result) {
-                showToast(result.message, true);
+            } else {
+                showToast("Gagal menyimpan data: " + resultError.message, true);
             }
         }
 
@@ -1062,7 +1041,6 @@
             document.getElementById('invDateEmit').textContent = emitDateStr;
             document.getElementById('stampDate').textContent = emitDate.toLocaleDateString('id-ID', {day: '2-digit', month: '2-digit', year: 'numeric'});
             
-            // Format Expiry Date untuk di PDF Invoice
             let cleanExpiry = userData.expiryDate;
             if (cleanExpiry && cleanExpiry !== '-' && cleanExpiry.toLowerCase() !== 'aktif') {
                 const dateObj = new Date(cleanExpiry);
@@ -1107,17 +1085,14 @@
                 }
             }
             
-            // Set Tanggal Paten dari Kolom F
             document.getElementById('setInvDate').value = purchaseDateStr;
             
-            // Set Paket Paten dari Kolom G
             let userPkg = userData.package;
             if (!userPkg || userPkg === "" || userPkg === "-") {
                  userPkg = "1";
             }
             document.getElementById('setInvPackage').value = userPkg;
             
-            // Load LocalStorage hanya untuk Tipe dan Harga jika sudah pernah tersimpan
             const savedData = localStorage.getItem('invoice_' + userData.username);
             if (savedData) {
                 const parsed = JSON.parse(savedData);
@@ -1186,15 +1161,14 @@
             setTimeout(() => { modal.classList.add('hidden'); }, 300);
         }
 
-        // FUNGSI UNDUH (Diperbarui Untuk Support A4 dan Custom CORS)
         function downloadInvoicePDF() {
             const element = document.getElementById('invoiceContent');
             const opt = {
-                margin:       0, // Dibuat 0 karena margin diatur lewat padding px-10 py-10 div konten
+                margin:       0,
                 filename:     `Invoice_HiCare_${currentInvoiceUser.username}.pdf`,
                 image:        { type: 'jpeg', quality: 1.0 },
-                html2canvas:  { scale: 2, useCORS: true, allowTaint: true }, // Penambahan allowTaint menjamin logo eksternal bisa tersedot
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' } // Ukuran A4 paten
+                html2canvas:  { scale: 2, useCORS: true, allowTaint: true }, 
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' } 
             };
 
             showToast("Sedang menyiapkan file PDF...", false);
@@ -1206,7 +1180,6 @@
             });
         }
 
-        // --- FUNGSI UNTUK HAPUS USER ---
         let userToDelete = null;
 
         function deleteUser(encUser) {
@@ -1231,20 +1204,20 @@
             const btn = document.getElementById('btnConfirmDelete');
             btn.disabled = true;
             btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 mr-2 animate-spin"></i> Menghapus...`;
-            lucide.createIcons();
+            refreshIcons();
 
-            const result = await fetchAPI({ action: "deleteUser", username: userToDelete });
+            const { error } = await supabaseClient.from('users').delete().eq('username', userToDelete);
             
             btn.disabled = false;
             btn.innerHTML = `Ya, Hapus`;
             closeDeleteModal(); 
 
-            if (result && result.success) {
+            if (!error) {
                 localStorage.removeItem('invoice_' + userToDelete);
-                showToast(result.message);
+                showToast("User berhasil dihapus");
                 loadUsers(); 
-            } else if (result) {
-                showToast(result.message, true);
+            } else {
+                showToast("Gagal menghapus user: " + error.message, true);
             }
         }
     </script>

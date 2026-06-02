@@ -324,7 +324,7 @@
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                 <i data-lucide="calendar-clock" class="w-4 h-4 text-slate-400 group-focus-within:text-indigo-500 transition-colors"></i>
                             </div>
-                            <input type="text" id="inpExpiry" placeholder="YYYY-MM-DD" class="w-full border border-slate-200/80 rounded-2xl pl-11 pr-4 py-3.5 outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all shadow-sm bg-white text-sm font-semibold text-slate-800 placeholder-slate-300">
+                            <input type="date" id="inpExpiry" onchange="document.getElementById('inpPackage').value = '';" class="w-full border border-slate-200/80 rounded-2xl pl-11 pr-4 py-3.5 outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all shadow-sm bg-white text-sm font-semibold text-slate-800 cursor-pointer">
                         </div>
                     </div>
                 </div>
